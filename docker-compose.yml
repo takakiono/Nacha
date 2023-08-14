@@ -1,0 +1,67 @@
+version: '3.6'
+
+services:
+  db:
+    container_name: db
+    image: mysql:latest
+    ports:
+      - 33307:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=nacha_db_root_password
+      - MYSQL_DATABASE=nacha_db
+      - MYSQL_USER=nacha_db_user
+      - MYSQL_PASSWORD=nacha
+    volumes:
+      - ./mysql/initdb.d:/docker-entrypoint-initdb.d
+      - mysql-data:/var/lib/mysql
+  java:
+    container_name: java
+    build: ./spring
+    depends_on:
+      - db
+    ports:
+      - 8801:8080
+    environment:
+      - DB_URL=db
+      - DB_PORT=3306
+      - DB_NAME=nacha_db
+      - DB_USER=nacha_db_user
+      - DB_PASSWORD=nacha
+      - APP_LOG=/app/log/application.log
+      - APP_LOG_LEVEL=info
+      - APP_PAGE_URL=http://localhost:8800
+    tty: true
+    volumes:
+      - .:/app:cached
+      - em-api-container-volume:/home/vscode/.vscode-server/extensions
+      - em-api-container-volume-insiders:/home/vscode/.vscode-server-insiders/extensions
+      - m2:/home/vscode/.m2:cached
+    working_dir: /app
+    networks:
+      - mynetwork
+  react:
+    build: ./frontend
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app:cached
+      - home:/home
+    working_dir: /app/frontend
+    container_name: react
+    networks:
+      - mynetwork
+volumes:
+  em-api-container-volume:
+    driver: local
+  em-api-container-volume-insiders:
+    driver: local
+  m2:
+    driver: local
+  mysql-data:
+    driver: local
+  home:
+    driver: local
+
+networks:
+  mynetwork:
+    external: true
