@@ -30,7 +30,9 @@
 				"pivotal.vscode-boot-dev-pack",
 				"vscjava.vscode-spring-boot-dashboard",
 				"vscode-icons-team.vscode-icons",
-				"vscjava.vscode-lombok"
+				"vscjava.vscode-lombok",
+				"hediet.vscode-drawio",
+				"MS-CEINTL.vscode-language-pack-ja"
 			]
 		}
 	},
@@ -39,5 +41,6 @@
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "java -version",
 	// Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "vscode"
+	"remoteUser": "vscode",
+	"postCreateCommand": "docker compose down --volumes"
 }
