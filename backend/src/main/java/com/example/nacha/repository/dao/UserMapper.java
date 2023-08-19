@@ -13,6 +13,12 @@ public interface UserMapper {
     /**
      * ダッシュボード情報の登録
      * 
+     */
+    List<UserEntity> select();
+
+    /**
+     * ダッシュボード情報の登録
+     * 
      * @param userId
      * @param userName
      */

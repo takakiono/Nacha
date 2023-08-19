@@ -12,10 +12,21 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * ユーザ情報の取得
+     * @return　ユーザ情報
+     */
+    public List<UserEntity> getUser(){
+        return userRepository.getUser();
+    }
+
+    /**
+     * ユーザ情報の登録
+     * @param users
+     * @return
+     */
     public List<UserEntity> regist(List<UserEntity> users){
-        System.out.println("start service");
         userRepository.registUser(users);
-        System.out.println("end service");
         return null;
     }
 }

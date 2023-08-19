@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.nacha.BirthStone;
 import com.example.nacha.repository.entity.UserEntity;
 import com.example.nacha.service.UserService;
 
 @Controller
+@RequestMapping("/nacha") 
 @CrossOrigin(origins = "*")
 public class MainController {
 
@@ -28,16 +31,22 @@ public class MainController {
         return birthStone;
     }
 
-    @GetMapping("/user")
+    @PostMapping("/user")
     @ResponseBody
-    public String userRegist() {
+    public String registUser() {
         List<UserEntity> users = new ArrayList<>();
         UserEntity user = new UserEntity();
-        user.setUserId(1L);
-        user.setUserName("aaa");
+        user.setUserId(3L);
+        user.setUserName("ccc");
         users.add(user);
         
         userService.regist(users);
         return "OK";
+    }
+
+    @GetMapping("/user")
+    @ResponseBody
+    public List<UserEntity> getUser(){
+        return userService.getUser();
     }
 }

@@ -16,6 +16,13 @@ public class UserRepository {
     UserMapper userMapper;
 
     /**
+     * ユーザマスタテーブルからの取得
+     */
+    public List<UserEntity> getUser(){
+        return userMapper.select();
+    }
+
+    /**
      * ユーザマスタテーブルへの登録
      * 
      * @param userId ユーザID
