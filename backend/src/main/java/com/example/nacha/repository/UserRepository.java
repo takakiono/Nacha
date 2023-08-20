@@ -29,9 +29,7 @@ public class UserRepository {
      * @param userName ユーザ名
      */
     public List<UserEntity> registUser(List<UserEntity> users){
-        System.out.println("start Repository");
         userMapper.regist(users);
-        System.out.println("end Repository");
         return users;
     }
 }
