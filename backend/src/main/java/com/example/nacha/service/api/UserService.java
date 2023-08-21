@@ -10,6 +10,7 @@ import com.example.nacha.repository.UserRepository;
 import com.example.nacha.repository.entity.UserEntity;
 import com.example.nacha.service.bean.GetUsersApiRequestBean;
 import com.example.nacha.service.bean.GetUsersApiResponseBean;
+import com.example.nacha.service.bean.GetUsersApiResponseBean.User;
 
 @Service
 public class UserService {
@@ -21,13 +22,16 @@ public class UserService {
      * ユーザ情報の取得
      * @return　ユーザ情報
      */
-    public List<GetUsersApiResponseBean> getUser(){
-        List<GetUsersApiResponseBean> response = userRepository.getUser().stream()
-            .map(list -> GetUsersApiResponseBean.builder()
+    public GetUsersApiResponseBean getUser(){
+        List<User> users = userRepository.getUser().stream()
+            .map(list -> User.builder()
                 .userId(list.getUserId().toString())
                 .userName(list.getUserName())    
                 .build())
             .collect(Collectors.toList());
+
+        GetUsersApiResponseBean response = new GetUsersApiResponseBean();
+        response.setUsers(users);
 
         return response;
     }

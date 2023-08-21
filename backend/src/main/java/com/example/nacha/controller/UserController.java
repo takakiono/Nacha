@@ -37,7 +37,7 @@ public class UserController {
 
     @GetMapping("/user")
     @ResponseBody
-    public List<GetUsersApiResponseBean> getUser(){
+    public GetUsersApiResponseBean getUser(){
         return userService.getUser();
     }
 }
