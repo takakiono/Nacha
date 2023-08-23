@@ -22,8 +22,8 @@ public class UserService {
      * ユーザ情報の取得
      * @return　ユーザ情報
      */
-    public GetUsersApiResponseBean getUser(){
-        List<User> users = userRepository.getUser().stream()
+    public GetUsersApiResponseBean getUser(Long groupId){
+        List<User> users = userRepository.getUser(groupId).stream()
             .map(list -> User.builder()
                 .userId(list.getUserId().toString())
                 .userName(list.getUserName())    

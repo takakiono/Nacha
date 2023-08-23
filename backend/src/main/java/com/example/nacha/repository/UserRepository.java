@@ -18,8 +18,8 @@ public class UserRepository {
     /**
      * ユーザマスタテーブルからの取得
      */
-    public List<UserEntity> getUser(){
-        return userMapper.select();
+    public List<UserEntity> getUser(Long groupId){
+        return userMapper.select(groupId);
     }
 
     /**

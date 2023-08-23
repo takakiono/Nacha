@@ -38,6 +38,7 @@ public class UserController {
     @GetMapping("/user")
     @ResponseBody
     public GetUsersApiResponseBean getUser(){
-        return userService.getUser();
+        Long groupId = 1L;
+        return userService.getUser(groupId);
     }
 }

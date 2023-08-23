@@ -6,10 +6,14 @@
   <!-- ユーザ情報の取得 -->
   <select id="select" resultType="com.example.nacha.repository.entity.UserEntity">
     select 
-      user_id
-      ,user_name
+      mu.user_id
+      ,mu.user_name
     from
-      m_user
+      m_user mu
+    inner join c_group_user cgu
+      on mu.user_id = cgu.user_id
+    where
+      cgu.group_id = #{groupId}
   </select>
 
   <!-- ユーザー情報の登録 -->
