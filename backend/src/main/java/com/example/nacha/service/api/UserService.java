@@ -1,14 +1,11 @@
 package com.example.nacha.service.api;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.nacha.repository.UserRepository;
 import com.example.nacha.repository.entity.UserEntity;
-import com.example.nacha.service.bean.GetUsersApiRequestBean;
 import com.example.nacha.service.bean.GetUsersApiResponseBean;
 import com.example.nacha.service.bean.GetUsersApiResponseBean.User;
 
@@ -20,9 +17,11 @@ public class UserService {
 
     /**
      * ユーザ情報の取得
+     * @param id グループID
      * @return　ユーザ情報
      */
-    public GetUsersApiResponseBean getUser(Long groupId){
+    public GetUsersApiResponseBean getUser(String id){
+        Long groupId = Long.valueOf(id);
         List<User> users = userRepository.getUser(groupId).stream()
             .map(list -> User.builder()
                 .userId(list.getUserId().toString())

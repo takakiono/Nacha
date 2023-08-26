@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.nacha.repository.entity.UserEntity;
 import com.example.nacha.service.api.UserService;
-import com.example.nacha.service.bean.GetUsersApiRequestBean;
 import com.example.nacha.service.bean.GetUsersApiResponseBean;
 
 @Controller
@@ -37,8 +37,7 @@ public class UserController {
 
     @GetMapping("/user")
     @ResponseBody
-    public GetUsersApiResponseBean getUser(){
-        Long groupId = 1L;
+    public GetUsersApiResponseBean getUser(@RequestParam("groupId") String groupId){
         return userService.getUser(groupId);
     }
 }

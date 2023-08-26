@@ -11,13 +11,13 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
     /**
-     * ダッシュボード情報の登録
+     * ユーザ情報の登録
      * 
      */
     List<UserEntity> select(@Param("groupId") Long groupId);
 
     /**
-     * ダッシュボード情報の登録
+     * ユーザ情報の登録
      * 
      * @param userId
      * @param userName

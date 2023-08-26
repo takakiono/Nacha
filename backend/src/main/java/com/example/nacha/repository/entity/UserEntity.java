@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class UserEntity {
+public class UserEntity extends BaseEntity{
     /**
      * ユーザID
      */
