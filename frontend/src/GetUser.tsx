@@ -15,7 +15,7 @@ export const GetUser = () =>{
     useEffect(() => {
       async function fetchData() {
         try {
-          const response = await fetch("http://0.0.0.0:8801/nacha/user", { method: "GET" });
+          const response = await fetch("http://0.0.0.0:8801/nacha/user?groupId=1", { method: "GET" });
           const data: ApiResponse = await response.json();
           setUsers(data.users);
         } catch (error) {
