@@ -10,7 +10,7 @@ export const ApiFetch = () => {
     const [stone, setStone] = useState<Stone | null>(null);
 
     useEffect(() => {
-        fetch("http://0.0.0.0:8801/api", { method: "GET" })
+        fetch("http://0.0.0.0:8801/nacha/api", { method: "GET" })
             .then((res) => res.json())
             .then((data) => {
                 setStone(data);

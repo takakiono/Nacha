@@ -14,8 +14,6 @@ services:
     volumes:
       - ./mysql/initdb.d:/docker-entrypoint-initdb.d
       - mysql-data:/var/lib/mysql
-    networks:
-      - mynetwork
   java:
     container_name: java
     build: ./spring
@@ -39,19 +37,7 @@ services:
       - em-api-container-volume-insiders:/home/vscode/.vscode-server-insiders/extensions
       - m2:/home/vscode/.m2:cached
     working_dir: /app
-    networks:
-      - mynetwork
-  react:
-    build: ./frontend
-    ports:
-      - 3000:3000
-    volumes:
-      - .:/app:cached
-      - home:/home
-    working_dir: /app/frontend
-    container_name: react
-    networks:
-      - mynetwork
+
 volumes:
   em-api-container-volume:
     driver: local
@@ -61,9 +47,3 @@ volumes:
     driver: local
   mysql-data:
     driver: local
-  home:
-    driver: local
-
-networks:
-  mynetwork:
-    external: true
