@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.nacha.repository.dao.AccountMapper">
+    <!-- 家計簿情報の取得 -->
+    <select id="select" resultType="com.example.nacha.repository.entity.AccountEntity">
+        select * 
+        from 
+            m_account 
+        where 
+            group_id = #{groupId};
+    </select>
+
+    <!-- 家計簿情報の登録 -->
+    <insert id="regist"
+        parameterType="java.util.List" useGeneratedKeys="true" keyProperty="accountId">
+        insert into m_account(
+            group_id
+            , category_id
+            , note
+            , amount
+            , datatime
+        )values(
+            #{entity.groupId}
+            ,#{entity.categoryId}
+            ,#{entity.note}
+            ,#{entity.amount}
+            ,#{entity.datetime}
+        );
+    </insert>
+
+</mapper>

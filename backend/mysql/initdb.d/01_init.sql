@@ -43,7 +43,7 @@ create table m_account (
   , group_id bigint not null comment 'グループID'
   , category_id bigint not null comment 'カテゴリID'
   , note varchar(256) not null comment '備考'
-  , amuont bigint not null comment '金額'
+  , amount bigint not null comment '金額'
   , datatime timestamp not null comment '日時'
   , registration_datetime timestamp default current_timestamp not null comment '登録日時'
   , update_datetime timestamp default current_timestamp not null comment '更新日時'
