@@ -1,15 +1,17 @@
 package com.example.nacha.service.api;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.nacha.repository.AccountRepository;
 import com.example.nacha.repository.entity.AccountEntity;
+import com.example.nacha.service.bean.GetAccountApiResponseBean;
 import com.example.nacha.service.bean.PostAccountApiRequestBean;
 import com.example.nacha.service.bean.PostAccountApiResponseBean;
-import com.example.nacha.service.bean.PostAccountApiResponseBean.Account;
+import com.example.nacha.service.bean.common.Account;
+
 
 @Service
 public class AccountService {
@@ -32,14 +34,42 @@ public class AccountService {
             .build();
         accountRepository.registAccount(entity);
 
-        List<AccountEntity> responseEntity = accountRepository.selectAccount(groupId);
-        List<Account> accounts = new ArrayList<>();
-        Account account = new Account();
-        account.setAmount(String.valueOf(responseEntity.get(0).getAmount()));
-        accounts.add(account);
+        List<AccountEntity> responseEntity = accountRepository.selectAccount(groupId, Long.valueOf(entity.getAccountId()), null);
+        Account account = Account.builder()
+                .accountId(String.valueOf(responseEntity.get(0).getAccountId()))
+                .groupId(String.valueOf(responseEntity.get(0).getGroupId()))
+                .categoryId(String.valueOf(responseEntity.get(0).getCategoryId()))
+                .note(responseEntity.get(0).getNote())
+                .amount(String.valueOf(responseEntity.get(0).getAmount()))
+                .build();
 
         PostAccountApiResponseBean response = new PostAccountApiResponseBean();
-        response.setAccout(accounts);
+        response.setAccout(account);
+        return response;
+    }
+
+    /**
+     * 
+     * @param request グループID
+     * @param acquisitionMonth　取得月
+     * @return
+     */
+    public GetAccountApiResponseBean getAccouts(String request, String acquisitionMonth){
+        Long groupId = Long.valueOf(request);
+        List<AccountEntity> responseEntity = accountRepository.selectAccount(groupId, null, acquisitionMonth);
+
+        List<Account> accounts = responseEntity.stream()
+            .map(list -> Account.builder()
+                .accountId(String.valueOf(list.getAccountId()))
+                .groupId(String.valueOf(list.getGroupId()))
+                .categoryId(String.valueOf(list.getCategoryId()))
+                .note(list.getNote())
+                .amount(String.valueOf(list.getAmount()))
+                .build())
+            .collect(Collectors.toList());
+
+        GetAccountApiResponseBean response = new GetAccountApiResponseBean();
+        response.setAccouts(accounts);
         return response;
     }
 }

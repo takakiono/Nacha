@@ -14,8 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class PostAccountApiResponseBean {
+public class GetAccountApiResponseBean {
 
-    private Account accout;
-
+    private List<Account> accouts;
 }

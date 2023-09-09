@@ -15,17 +15,18 @@ public class AccountRepository {
     AccountMapper accountMapper;
 
     /**
-     * 家計簿情報の登録
-     * @param entity
+     * 家計簿情報の取得
+     * @param groupId グループID
+     * @param acquisitionMonth　取得月
      * @return
      */
-    public List<AccountEntity> selectAccount(Long groupId){
-        return accountMapper.select(groupId);
+    public List<AccountEntity> selectAccount(Long groupId, Long accountId, String acquisitionMonth){
+        return accountMapper.select(groupId, accountId, acquisitionMonth);
     }
 
     /**
      * 家計簿情報の登録
-     * @param entity
+     * @param entity 家計簿情報
      * @return
      */
     public int registAccount(AccountEntity entity){

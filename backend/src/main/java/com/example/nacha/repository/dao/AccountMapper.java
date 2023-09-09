@@ -15,9 +15,11 @@ public interface AccountMapper {
     /**
      * 家計簿情報の取得
      * 
-     * @param groupId
+     * @param groupId グループID
+     * @param accountId 家計簿ID
+     * @param acquisitionMonth 取得月
      */
-    List<AccountEntity> select(@Param("groupId") Long groupId);
+    List<AccountEntity> select(@Param("groupId") Long groupId, @Param("accountId") Long accountId,  @Param("acquisitionMonth") String acquisitionMonth);
 
     /**
      * 家計簿情報の登録
