@@ -1,0 +1,37 @@
+// For format details, see https://aka.ms/vscode-remote/devcontainer.json or this file's README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.195.0/containers/java
+{
+    "name": "nacha",
+    "workspaceFolder": "/app",
+    "dockerComposeFile": "../docker-compose.yml",
+    "settings": {
+        "editor.tabSize": 4,
+        "editor.formatOnSave": false
+    },
+    "service": "react",
+    // Configure tool-specific properties.
+    "customizations": {
+        // Configure properties specific to VS Code.
+        "vscode": {
+            // Set *default* container specific settings.json values on container create.
+            "settings": { 
+                "maven.executable.path": "/usr/local/sdkman/candidates/maven/current/bin/mvn",
+                "java.format.settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
+                "java.format.settings.profile": "GoogleStyle"
+            },
+            
+            // Add the IDs of extensions you want installed when the container is created.
+            "extensions": [
+                "vscode-icons-team.vscode-icons",
+                "MS-CEINTL.vscode-language-pack-ja"
+            ]
+        }
+    },
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    // "forwardPorts": [],
+    // Use 'postCreateCommand' to run commands after the container is created.
+    // "postCreateCommand": "java -version",
+    // Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
+    // "remoteUser": "vscode",
+    "postCreateCommand": "yarn install"
+}
