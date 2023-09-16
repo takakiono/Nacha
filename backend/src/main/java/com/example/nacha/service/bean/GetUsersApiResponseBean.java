@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class GetUsersApiResponseBean {
 
+    /* ユーザ情報リスト */
     private List<User> users;
 
     @Builder

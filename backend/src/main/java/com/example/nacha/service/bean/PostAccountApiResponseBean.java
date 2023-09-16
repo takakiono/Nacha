@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class PostAccountApiResponseBean {
 
+    /* 家計簿情報 */
     private Account accout;
 
 }

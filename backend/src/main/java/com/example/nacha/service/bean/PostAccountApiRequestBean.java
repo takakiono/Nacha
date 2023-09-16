@@ -15,10 +15,18 @@ import lombok.NoArgsConstructor;
 @Data
 public class PostAccountApiRequestBean {
 
+    /* グループID */
     private String groupId;
+
+    /* カテゴリID */
     private String categoryId;
+    /* メモ */
     private String note;
+
+    /* 金額 */
     private String amount;
+    
+    /* 日付 */
     private String datetime;
 
 }
