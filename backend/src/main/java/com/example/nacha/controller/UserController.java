@@ -4,19 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import com.example.nacha.repository.entity.UserEntity;
 import com.example.nacha.service.api.UserService;
 import com.example.nacha.service.bean.GetUsersApiResponseBean;
 
-@Controller
+@RestController
 @RequestMapping("/nacha") 
 @CrossOrigin(origins = "*")
+@Validated
 public class UserController {
     
     @Autowired
