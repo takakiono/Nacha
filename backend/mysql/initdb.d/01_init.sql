@@ -44,7 +44,7 @@ create table m_account (
   , category_id bigint not null comment 'カテゴリID'
   , note varchar(256) not null comment '備考'
   , amount bigint not null comment '金額'
-  , datatime timestamp not null comment '日時'
+  , account_datetime timestamp not null comment '日時'
   , registration_datetime timestamp default current_timestamp not null comment '登録日時'
   , update_datetime timestamp default current_timestamp not null comment '更新日時'
   , logical_delete_flag boolean default false not null comment '論理削除フラグ'

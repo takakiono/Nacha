@@ -38,5 +38,5 @@ public class Account {
     /**
      * 日時
      */
-    private String datatime;
+    private String datetime;
 }

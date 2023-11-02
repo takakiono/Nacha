@@ -11,7 +11,7 @@
             ,category_id
             ,note
             ,amount
-            ,datatime
+            ,account_datetime
         from 
             m_account 
         where 
@@ -20,7 +20,7 @@
         and group_id = #{groupId}
         </if>
         <if test="acquisitionMonth != null and acquisitionMonth != ''">
-        and datatime like concat('%', #{acquisitionMonth}, '%')
+        and account_datetime like concat('%', #{acquisitionMonth}, '%')
         </if>
         <if test="accountId != null and accountId != ''">
         and account_id = #{accountId}
@@ -37,13 +37,13 @@
             , category_id
             , note
             , amount
-            , datatime
+            , account_datetime
         )values(
             #{entity.groupId}
             ,#{entity.categoryId}
             ,#{entity.note}
             ,#{entity.amount}
-            ,#{entity.datetime}
+            ,#{entity.accountDatetime}
         );
     </insert>
 

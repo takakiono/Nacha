@@ -1,6 +1,8 @@
 package com.example.nacha.repository.entity;
 
+import java.time.LocalDate;
 import java.util.Date;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -43,6 +45,6 @@ public class AccountEntity extends BaseEntity{
     /**
      * 日時
      */
-    private Date datetime;
+    private LocalDate accountDatetime;
 
 }

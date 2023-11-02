@@ -1,5 +1,7 @@
 package com.example.nacha.service.bean;
 
+import javax.validation.constraints.NotBlank;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +17,7 @@ import lombok.NoArgsConstructor;
 public class PostAccountApiRequestBean {
 
     /* グループID */
+    @NotBlank
     private String groupId;
 
     /* カテゴリID */
@@ -26,6 +29,8 @@ public class PostAccountApiRequestBean {
     private String amount;
     
     /* 日付 */
+    @NotBlank
+    @JsonFormat(pattern="yyyy-MM-dd")
     private String datetime;
 
 }

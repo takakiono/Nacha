@@ -1,6 +1,8 @@
 package com.example.nacha.service.api;
 
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,8 @@ public class AccountService {
     @Autowired
     AccountRepository accountRepository;
 
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
     /**
      * 家計簿の登録
      * @param request PostAccountApiRequestBean
@@ -25,12 +29,15 @@ public class AccountService {
      */
     public PostAccountApiResponseBean registAccount(PostAccountApiRequestBean request){
         Long groupId = Long.valueOf(request.getGroupId());
+
+        
+        LocalDate localDate = LocalDate.parse(request.getDatetime(), formatter);
         AccountEntity entity = AccountEntity.builder()
             .groupId(groupId)
             .categoryId(Long.valueOf(request.getCategoryId()))
             .note(request.getNote())
             .amount(Long.valueOf(request.getAmount()))
-            .datetime(new Date())
+            .accountDatetime(localDate)
             .build();
         accountRepository.registAccount(entity);
 
@@ -41,6 +48,7 @@ public class AccountService {
                 .categoryId(String.valueOf(responseEntity.get(0).getCategoryId()))
                 .note(responseEntity.get(0).getNote())
                 .amount(String.valueOf(responseEntity.get(0).getAmount()))
+                .datetime(responseEntity.get(0).getAccountDatetime().format(formatter))
                 .build();
 
         PostAccountApiResponseBean response = new PostAccountApiResponseBean();
@@ -65,6 +73,7 @@ public class AccountService {
                 .categoryId(String.valueOf(list.getCategoryId()))
                 .note(list.getNote())
                 .amount(String.valueOf(list.getAmount()))
+                .datetime(list.getAccountDatetime().format(formatter))
                 .build())
             .collect(Collectors.toList());
 
