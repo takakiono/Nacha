@@ -3,7 +3,7 @@
 # ===============================
 spring:
   datasource:
-    url: jdbc:mysql://${DB_URL:db}:${DB_PORT:3306}/${DB_NAME:acha_db}
+    url: jdbc:mysql://${DB_URL:db}:${DB_PORT:3306}/${DB_NAME:nacha_db}
     username: ${DB_USER:nacha_db_user}
     password: ${DB_PASSWORD:nacha}
     driver-class-name: com.mysql.cj.jdbc.Driver

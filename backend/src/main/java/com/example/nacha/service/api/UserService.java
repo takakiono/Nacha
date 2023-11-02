@@ -41,7 +41,7 @@ public class UserService {
      * @return
      */
     public List<UserEntity> regist(List<UserEntity> users){
-        userRepository.registUser(users);
+        List<UserEntity> entity = userRepository.registUser(users);
         return null;
     }
 }

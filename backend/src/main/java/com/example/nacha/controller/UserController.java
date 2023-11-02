@@ -3,11 +3,11 @@ package com.example.nacha.controller;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.nacha.repository.entity.UserEntity;
 import com.example.nacha.service.api.UserService;
 import com.example.nacha.service.bean.GetUsersApiResponseBean;
+import com.example.nacha.service.bean.RegistUsersApiRequestBean;
 
 @RestController
 @RequestMapping("/nacha") 
@@ -25,17 +26,17 @@ public class UserController {
     @Autowired
     UserService userService;
     
-    @PostMapping("/user")
+    @PostMapping("/user/regist")
     @ResponseBody
-    public String registUser() {
+    public RegistUsersApiRequestBean registUser(@RequestBody @Validated RegistUsersApiRequestBean request) {
         List<UserEntity> users = new ArrayList<>();
         UserEntity user = new UserEntity();
-        user.setUserId(3L);
-        user.setUserName("ccc");
+        user.setUserName(request.getUserName());
         users.add(user);
         
         userService.regist(users);
-        return "OK";
+        
+        return null;
     }
 
     @GetMapping("/user")

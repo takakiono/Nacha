@@ -1,21 +1,21 @@
 package com.example.nacha.service.bean;
 
-import com.example.nacha.service.bean.common.Account;
+import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 家計簿登録リクエストBean
+ * ユーザ追加
  */
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Data
-public class PostAccountApiResponseBean {
+public class RegistUsersApiRequestBean {
 
-    /* 家計簿情報 */
-    private Account accout;
-
+    /* ユーザ名 */
+    @NotBlank
+    private String userName;
 }

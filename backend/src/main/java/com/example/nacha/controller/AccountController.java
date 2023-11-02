@@ -2,7 +2,6 @@ package com.example.nacha.controller;
 
 import javax.validation.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +33,7 @@ public class AccountController {
 
     @GetMapping("/account")
     @ResponseBody
-    public GetAccountApiResponseBean getAccout(@RequestParam @NotEmpty String groupId, @RequestParam String acquisitionMonth){
+    public GetAccountApiResponseBean getAccout(@RequestParam @NotEmpty(message = "{javax.validation.constraints.NotEmpty.message}") String groupId, @RequestParam String acquisitionMonth){
         return accountService.getAccouts(groupId, acquisitionMonth);
     }
 }
