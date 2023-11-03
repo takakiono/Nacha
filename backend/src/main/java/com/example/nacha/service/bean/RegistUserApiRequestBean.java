@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Data
-public class RegistUsersApiRequestBean {
+public class RegistUserApiRequestBean {
 
     /* ユーザ名 */
     @NotBlank

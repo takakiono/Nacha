@@ -15,7 +15,7 @@
         from 
             m_account 
         where 
-            1=1
+            logical_delete_flag = false
         <if test="groupId != null and groupId != ''">
         and group_id = #{groupId}
         </if>
@@ -25,7 +25,6 @@
         <if test="accountId != null and accountId != ''">
         and account_id = #{accountId}
         </if>
-        and logical_delete_flag = false
         ;
     </select>
 

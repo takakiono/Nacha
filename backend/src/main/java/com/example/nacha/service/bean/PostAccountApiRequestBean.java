@@ -22,6 +22,7 @@ public class PostAccountApiRequestBean {
 
     /* カテゴリID */
     private String categoryId;
+    
     /* メモ */
     private String note;
 

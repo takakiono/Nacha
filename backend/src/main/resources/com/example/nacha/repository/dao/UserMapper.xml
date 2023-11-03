@@ -5,6 +5,20 @@
 <mapper namespace="com.example.nacha.repository.dao.UserMapper">
   <!-- ユーザ情報の取得 -->
   <select id="select" resultType="com.example.nacha.repository.entity.UserEntity">
+    select
+      user_id
+      ,user_name
+    from
+      m_user mu
+    <where>
+      <if test="userId != null and userId != ''">
+        mu.user_id = #{userId}
+      </if>
+    </where>
+  </select>
+
+  <!-- グループに紐づくユーザ情報の取得 -->
+  <select id="selectByGroupId" resultType="com.example.nacha.repository.entity.UserEntity">
     select 
       mu.user_id
       ,mu.user_name
@@ -17,19 +31,25 @@
   </select>
 
   <!-- ユーザー情報の登録 -->
-  <insert id="regist"
-    parameterType="java.util.List" useGeneratedKeys="true" keyProperty="userId">
+  <insert id="regist" useGeneratedKeys="true" keyProperty="userId">
     insert into 
         m_user(
-            user_id
-            , user_name
+            user_name
         ) 
     values
-      <foreach collection="entities" item="entity" separator=",">
       (
-        #{entity.userId}
-        , #{entity.userName}
+        #{entity.userName}
       )
-      </foreach>
   </insert>
+
+  <!-- ユーザー情報の更新 -->
+  <update id="update">
+    update
+      m_user
+    set
+      user_name = #{entity.userName}
+      ,update_datetime = #{entity.updateDatetime}
+    where
+      user_id = #{entity.userId}
+  </update>
 </mapper>

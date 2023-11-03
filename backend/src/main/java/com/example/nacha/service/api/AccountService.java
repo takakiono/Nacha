@@ -1,6 +1,5 @@
 package com.example.nacha.service.api;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -30,14 +29,13 @@ public class AccountService {
     public PostAccountApiResponseBean registAccount(PostAccountApiRequestBean request){
         Long groupId = Long.valueOf(request.getGroupId());
 
-        
         LocalDate localDate = LocalDate.parse(request.getDatetime(), formatter);
         AccountEntity entity = AccountEntity.builder()
             .groupId(groupId)
             .categoryId(Long.valueOf(request.getCategoryId()))
             .note(request.getNote())
             .amount(Long.valueOf(request.getAmount()))
-            .accountDatetime(localDate)
+            .accountDatetime(localDate.atStartOfDay())
             .build();
         accountRepository.registAccount(entity);
 

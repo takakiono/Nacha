@@ -1,8 +1,8 @@
 package com.example.nacha.repository.entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class AccountEntity extends BaseEntity{
+public class AccountEntity{
 
     /**
      * 家計簿ID
@@ -45,6 +45,21 @@ public class AccountEntity extends BaseEntity{
     /**
      * 日時
      */
-    private LocalDate accountDatetime;
+    private LocalDateTime accountDatetime;
+
+    /**
+     * 登録日時
+     */
+    private LocalDateTime registrationDatetime;
+
+    /**
+     * 更新日時
+     */
+    private LocalDateTime updateDatetime;
+
+    /**
+     * 論理削除フラグ
+     */
+    private boolean logicalDeleteFlag;
 
 }

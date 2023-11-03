@@ -1,21 +1,20 @@
 package com.example.nacha.controller;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import com.example.nacha.repository.entity.UserEntity;
 import com.example.nacha.service.api.UserService;
-import com.example.nacha.service.bean.GetUsersApiResponseBean;
-import com.example.nacha.service.bean.RegistUsersApiRequestBean;
+import com.example.nacha.service.bean.RegistUserApiRequestBean;
+import com.example.nacha.service.bean.RegistUserApiResponseBean;
+import com.example.nacha.service.bean.UpdateUserApiRequestBean;
+import com.example.nacha.service.bean.UpdateUserApiResponseBean;
 
 @RestController
 @RequestMapping("/nacha") 
@@ -28,20 +27,13 @@ public class UserController {
     
     @PostMapping("/user/regist")
     @ResponseBody
-    public RegistUsersApiRequestBean registUser(@RequestBody @Validated RegistUsersApiRequestBean request) {
-        List<UserEntity> users = new ArrayList<>();
-        UserEntity user = new UserEntity();
-        user.setUserName(request.getUserName());
-        users.add(user);
-        
-        userService.regist(users);
-        
-        return null;
+    public RegistUserApiResponseBean registUser(@RequestBody @Validated RegistUserApiRequestBean request) {
+        return userService.regist(request); 
     }
 
-    @GetMapping("/user")
+    @PutMapping("/user/update")
     @ResponseBody
-    public GetUsersApiResponseBean getUser(@RequestParam("groupId") String groupId){
-        return userService.getUser(groupId);
+    public UpdateUserApiResponseBean updateUser(@RequestParam String userId, @RequestBody UpdateUserApiRequestBean request){
+        return userService.update(userId, request);
     }
 }

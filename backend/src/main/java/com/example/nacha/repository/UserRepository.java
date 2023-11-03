@@ -16,20 +16,36 @@ public class UserRepository {
     UserMapper userMapper;
 
     /**
-     * ユーザマスタテーブルからの取得
+     * ユーザ情報の取得
      */
-    public List<UserEntity> getUser(Long groupId){
-        return userMapper.select(groupId);
+    public UserEntity getUser(Long userId){
+        return userMapper.select(userId);
     }
 
     /**
-     * ユーザマスタテーブルへの登録
+     * グループに紐づくユーザ情報の取得
+     */
+    public List<UserEntity> getGroupUser(Long groupId){
+        return userMapper.selectByGroupId(groupId);
+    }
+
+    /**
+     * ユーザ情報の登録
      * 
      * @param userId ユーザID
      * @param userName ユーザ名
      */
-    public List<UserEntity> registUser(List<UserEntity> users){
-        userMapper.regist(users);
-        return users;
+    public int registUser(UserEntity user){
+        return userMapper.regist(user);
+    }
+
+    /**
+     * ユーザ情報の登録
+     * 
+     * @param userId ユーザID
+     * @param userName ユーザ名
+     */
+    public int updateUser(UserEntity user){
+        return userMapper.update(user);
     }
 }
