@@ -2,6 +2,7 @@ package com.example.nacha.controller;
 
 import javax.validation.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,7 @@ public class AccountController {
     @Autowired
     AccountService accountService;
 
+    @Transactional
     @PostMapping("/account")
     @ResponseBody
     public PostAccountApiResponseBean registAccount(@RequestBody @Validated PostAccountApiRequestBean request){

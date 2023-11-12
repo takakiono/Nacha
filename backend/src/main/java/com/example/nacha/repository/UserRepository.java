@@ -48,4 +48,13 @@ public class UserRepository {
     public int updateUser(UserEntity user){
         return userMapper.update(user);
     }
+
+    /**
+     * ユーザ情報の削除
+     * 
+     * @param userId　ユーザID
+     */
+    public int deleteUser(Long userId){
+        return userMapper.delete(userId);
+    }
 }

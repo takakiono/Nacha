@@ -52,4 +52,8 @@
     where
       user_id = #{entity.userId}
   </update>
+
+  <delete id="delete">
+    delete from m_user where user_id = #{userId}
+  </delete>
 </mapper>

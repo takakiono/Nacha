@@ -1,8 +1,12 @@
 package com.example.nacha.service.api;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+import com.example.nacha.common.constants.ErrorMessage;
+import com.example.nacha.common.exception.NachaBusinessException;
 import com.example.nacha.repository.UserRepository;
 import com.example.nacha.repository.entity.UserEntity;
 import com.example.nacha.service.bean.RegistUserApiRequestBean;
@@ -19,6 +23,7 @@ public class UserService {
 
     /**
      * ユーザ情報の登録
+     * 
      * @param users
      * @return
      */
@@ -39,6 +44,7 @@ public class UserService {
 
     /**
      * ユーザ情報の更新
+     * 
      * @param users
      * @return
      */
@@ -57,5 +63,25 @@ public class UserService {
                 .userName(entity.getUserName())
                 .build())
             .build();
+    }
+
+    /**
+     * ユーザ情報の削除
+     * 
+     * @param userId　ユーザID
+     * @throws Exception　例外
+     */
+    public void delete(String userId) throws Exception{
+
+        // 削除対象のユーザの検索
+        UserEntity entity = userRepository.getUser(Long.valueOf(userId));
+        if (Objects.isNull(entity) || ObjectUtils.isEmpty(entity)){
+            throw new NachaBusinessException(ErrorMessage.NachaNotTargetError);
+        }
+
+        int result = userRepository.deleteUser(Long.valueOf(userId));
+        if(result == 0){
+            throw new NachaBusinessException(ErrorMessage.NachaDeleteError);
+        }
     }
 }
