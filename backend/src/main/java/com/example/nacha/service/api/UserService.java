@@ -7,8 +7,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import com.example.nacha.common.constants.ErrorMessage;
 import com.example.nacha.common.exception.NachaBusinessException;
+import com.example.nacha.common.utils.DatetimeUtils;
+import com.example.nacha.common.utils.ExclusiveUtils;
 import com.example.nacha.repository.UserRepository;
 import com.example.nacha.repository.entity.UserEntity;
+import com.example.nacha.service.bean.GetUserApiRequestBean;
+import com.example.nacha.service.bean.GetUserApiResponseBean;
 import com.example.nacha.service.bean.RegistUserApiRequestBean;
 import com.example.nacha.service.bean.RegistUserApiResponseBean;
 import com.example.nacha.service.bean.UpdateUserApiRequestBean;
@@ -20,6 +24,23 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    /**
+     * ユーザ情報の取得
+     *
+     * @param userId ユーザID
+     * @return ユーザ情報
+     */
+    public GetUserApiResponseBean get(String userId){
+        UserEntity entity = userRepository.getUser(Long.valueOf(userId));
+        return GetUserApiResponseBean.builder()
+                .user(User.builder()
+                    .userId(String.valueOf(entity.getUserId()))
+                    .userName(entity.getUserName())
+                    .build())
+                .updatetime(DatetimeUtils.format(entity.getUpdateDatetime()))
+                .build();
+    }
 
     /**
      * ユーザ情報の登録
@@ -49,6 +70,9 @@ public class UserService {
      * @return
      */
     public UpdateUserApiResponseBean update(String userId, UpdateUserApiRequestBean request){
+        // 楽観排他チェック
+        ExclusiveUtils.checkExclusive(request.getUpdatetime(), userRepository.getUser(Long.valueOf(userId)).getUpdateDatetime());
+        
         UserEntity user = UserEntity.builder()
             .userId(Long.valueOf(userId))
             .userName(request.getUserName())
@@ -56,11 +80,11 @@ public class UserService {
             .build();
         userRepository.updateUser(user);
 
-        UserEntity entity = userRepository.getUser(user.getUserId());
+        UserEntity response = userRepository.getUser(user.getUserId());
         return UpdateUserApiResponseBean.builder()
             .user(User.builder()
-                .userId(String.valueOf(entity.getUserId()))
-                .userName(entity.getUserName())
+                .userId(String.valueOf(response.getUserId()))
+                .userName(response.getUserName())
                 .build())
             .build();
     }

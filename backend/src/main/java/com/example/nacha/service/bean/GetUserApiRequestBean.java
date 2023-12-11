@@ -13,13 +13,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Data
-public class UpdateUserApiRequestBean {
+public class GetUserApiRequestBean {
 
-    /* ユーザ名 */
+    /* ユーザID */
     @NotBlank
-    private String userName;
-
-    /* 更新日時 */
-    @NotBlank
-    private String updatetime;
+    private String userId;
 }

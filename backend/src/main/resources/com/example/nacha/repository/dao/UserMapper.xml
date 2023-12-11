@@ -8,6 +8,7 @@
     select
       user_id
       ,user_name
+      ,update_datetime
     from
       m_user mu
     <where>

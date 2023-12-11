@@ -1,25 +1,23 @@
 package com.example.nacha.service.bean;
 
-import javax.validation.constraints.NotBlank;
+import com.example.nacha.service.bean.common.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * ユーザ追加
+ * ユーザリクエストBean
  */
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Data
-public class UpdateUserApiRequestBean {
+public class GetUserApiResponseBean {
 
-    /* ユーザ名 */
-    @NotBlank
-    private String userName;
+    /* ユーザ情報 */
+    private User user;
 
     /* 更新日時 */
-    @NotBlank
     private String updatetime;
 }
