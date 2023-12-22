@@ -55,7 +55,7 @@ public class AccountService {
     }
 
     /**
-     * 
+     * 家計簿の取得
      * @param request グループID
      * @param acquisitionMonth　取得月
      * @return
