@@ -76,7 +76,7 @@ public class AccountService {
             .collect(Collectors.toList());
 
         GetAccountApiResponseBean response = new GetAccountApiResponseBean();
-        response.setAccouts(accounts);
+        response.setAccounts(accounts);
         return response;
     }
 }

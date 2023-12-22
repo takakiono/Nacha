@@ -17,5 +17,5 @@ import lombok.NoArgsConstructor;
 public class GetAccountApiResponseBean {
 
     /* 家計簿情報リスト */
-    private List<Account> accouts;
+    private List<Account> accounts;
 }
