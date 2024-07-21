@@ -20,7 +20,7 @@ export const GetAccount = () =>{
     useEffect(() => {
       async function fetchData() {
         try {
-          const response = await fetch("http://0.0.0.0:8801/nacha/account?groupId=1&acquisitionMonth=2023-11", { method: "GET" });
+          const response = await fetch("http://localhost:8801/nacha/account?groupId=1&acquisitionMonth=2023-11", { method: "GET" });
           const data: ApiResponse = await response.json();
           setAccounts(data.accounts);
         } catch (error) {

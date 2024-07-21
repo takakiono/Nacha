@@ -11,7 +11,6 @@ import com.example.nacha.common.utils.DatetimeUtils;
 import com.example.nacha.common.utils.ExclusiveUtils;
 import com.example.nacha.repository.UserRepository;
 import com.example.nacha.repository.entity.UserEntity;
-import com.example.nacha.service.bean.GetUserApiRequestBean;
 import com.example.nacha.service.bean.GetUserApiResponseBean;
 import com.example.nacha.service.bean.RegistUserApiRequestBean;
 import com.example.nacha.service.bean.RegistUserApiResponseBean;

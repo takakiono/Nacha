@@ -32,4 +32,13 @@ public class AccountRepository {
     public int registAccount(AccountEntity entity){
         return accountMapper.regist(entity);
     }
+
+    /**
+     * 家計簿情報の削除
+     * @param accountId 家計簿ID
+     * @return
+     */
+    public int deleteAccount(Long accountId){
+        return accountMapper.delete(accountId);
+    }
 }

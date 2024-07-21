@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.nacha.service.api.AccountService;
 import com.example.nacha.service.bean.GetAccountApiResponseBean;
+import com.example.nacha.service.bean.GetSumCategoriesApiResponseBean;
 import com.example.nacha.service.bean.PostAccountApiRequestBean;
 import com.example.nacha.service.bean.PostAccountApiResponseBean;
 
@@ -35,7 +37,19 @@ public class AccountController {
 
     @GetMapping("/account")
     @ResponseBody
-    public GetAccountApiResponseBean getAccout(@RequestParam @NotEmpty(message = "{javax.validation.constraints.NotEmpty.message}") String groupId, @RequestParam String acquisitionMonth){
+    public GetAccountApiResponseBean getAccount(@RequestParam @NotEmpty(message = "{javax.validation.constraints.NotEmpty.message}") String groupId, @RequestParam String acquisitionMonth){
         return accountService.getAccouts(groupId, acquisitionMonth);
+    }
+
+    @Transactional
+    @DeleteMapping("/account")
+    public void deleteAccount(@RequestParam @NotEmpty String accountId){
+        accountService.deleteAccount(accountId);
+    }
+
+    @GetMapping("/account/sum")
+    @ResponseBody
+    public GetSumCategoriesApiResponseBean getSumCategories(@RequestParam @NotEmpty(message = "{javax.validation.constraints.NotEmpty.message}") String groupId, @RequestParam String acquisitionMonth){
+        return accountService.getSumCategories(groupId, acquisitionMonth);
     }
 }

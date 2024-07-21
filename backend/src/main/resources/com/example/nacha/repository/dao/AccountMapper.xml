@@ -6,24 +6,24 @@
     <!-- 家計簿情報の取得 -->
     <select id="select" resultType="com.example.nacha.repository.entity.AccountEntity">
         select
-            account_id
-            ,group_id
-            ,category_id
-            ,note
-            ,amount
-            ,account_datetime
+            ma.account_id
+            ,ma.group_id
+            ,ma.category_id
+            ,ma.note
+            ,ma.amount
+            ,ma.account_datetime
         from 
-            m_account 
+            m_account ma
         where 
-            logical_delete_flag = false
+            ma.logical_delete_flag = false
         <if test="groupId != null and groupId != ''">
-        and group_id = #{groupId}
+        and ma.group_id = #{groupId}
         </if>
         <if test="acquisitionMonth != null and acquisitionMonth != ''">
-        and account_datetime like concat('%', #{acquisitionMonth}, '%')
+        and ma.account_datetime like concat('%', #{acquisitionMonth}, '%')
         </if>
         <if test="accountId != null and accountId != ''">
-        and account_id = #{accountId}
+        and ma.account_id = #{accountId}
         </if>
         ;
     </select>
@@ -45,5 +45,10 @@
             ,#{entity.accountDatetime}
         );
     </insert>
+
+    <!-- 家計簿情報の削除 -->
+    <delete id="delete">
+        delete from m_account where account_id = #{accountId}
+    </delete>
 
 </mapper>

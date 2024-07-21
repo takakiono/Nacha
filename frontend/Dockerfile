@@ -1,5 +1,5 @@
 # Node.js ベースのイメージを使用
-FROM mcr.microsoft.com/devcontainers/typescript-node:20
+FROM mcr.microsoft.com/devcontainers/typescript-node
 
 # 作業ディレクトリを設定
 WORKDIR /app

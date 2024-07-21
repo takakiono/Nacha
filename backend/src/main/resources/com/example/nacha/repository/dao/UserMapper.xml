@@ -54,6 +54,7 @@
       user_id = #{entity.userId}
   </update>
 
+  <!-- ユーザー情報の削除 -->
   <delete id="delete">
     delete from m_user where user_id = #{userId}
   </delete>

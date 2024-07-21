@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.nacha.repository.dao.CategoryMapper">
+    <!-- ユーザ情報の取得 -->
+    <select id="select" resultType="com.example.nacha.repository.entity.CategoryEntity">
+        select
+            mc.category_id
+            ,mc.category_name
+            ,mc.registration_datetime
+            ,mc.update_datetime
+            ,mc.logical_delete_flag
+        from
+            m_category mc
+    </select>
+</mapper>

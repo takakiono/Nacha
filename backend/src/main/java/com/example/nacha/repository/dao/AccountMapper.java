@@ -27,4 +27,11 @@ public interface AccountMapper {
      * @param entity 家計簿情報
      */
     int regist(@Param("entity") AccountEntity entity);
+
+    /**
+     * 家計簿情報の削除
+     * 
+     * @param accountId　家計簿ID
+     */
+    int delete(@Param("accountId") Long accountId);
 }

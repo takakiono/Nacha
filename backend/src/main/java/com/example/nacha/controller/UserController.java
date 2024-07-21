@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.nacha.service.api.UserService;
-import com.example.nacha.service.bean.GetUserApiRequestBean;
 import com.example.nacha.service.bean.GetUserApiResponseBean;
 import com.example.nacha.service.bean.RegistUserApiRequestBean;
 import com.example.nacha.service.bean.RegistUserApiResponseBean;
