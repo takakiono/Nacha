@@ -9,6 +9,16 @@
             "projectName": "nacha",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-NachaApplication<nacha-app>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.nacha.NachaApplication",
+            "projectName": "nacha-app",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }
