@@ -129,7 +129,7 @@ public class AccountService {
                     .reduce(0L, Long::sum);
 
                 return SumCategory.builder()
-                    .categoryId(list.getCategoryId())
+                    .categoryId(String.valueOf(list.getCategoryId()))
                     .sum(sumAmout)
                     .build();
             })

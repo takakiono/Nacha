@@ -1,26 +1,20 @@
 package com.example.nacha.service.bean;
 
+import java.util.List;
+import com.example.nacha.service.bean.common.Category;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
-* カテゴリ別合計額
-*/
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
-public class SumCategory {
-   /**
-    * カテゴリID
-    */
-   String categoryId;
-
-   /**
-    * 合計値
-    */
-   Long sum;
-
+public class GetCategoryApiResponseBean {
+    /**
+     * カテゴリ
+     */
+    List<Category> categories;
 }

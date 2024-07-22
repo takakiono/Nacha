@@ -9,6 +9,10 @@ insert into m_user(user_name) values('夏目 奈苗');
 insert into c_group_user(group_id, user_id) values(1,1);
 insert into c_group_user(group_id, user_id) values(1,2);
 
-insert into m_category(category_name) values('固定費');
-insert into m_category(category_name) values('生活費');
-insert into m_category(category_name) values('自由費');
+insert into m_category(category_name) values('家賃');
+insert into m_category(category_name) values('電気代');
+insert into m_category(category_name) values('水道代');
+insert into m_category(category_name) values('ガス代');
+insert into m_category(category_name) values('食費');
+insert into m_category(category_name) values('日用品');
+insert into m_category(category_name) values('予備費');
