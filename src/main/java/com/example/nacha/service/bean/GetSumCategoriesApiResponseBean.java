@@ -18,6 +18,11 @@ public class GetSumCategoriesApiResponseBean {
      * カテゴリ別合計額
      */
     List<SumCategory> sumCategories;
+
+    /**
+     * 取得月合計額
+     */
+    Long sum;
     
     /**
      * 取得月

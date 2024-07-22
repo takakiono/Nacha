@@ -137,6 +137,9 @@ public class AccountService {
 
         return GetSumCategoriesApiResponseBean.builder()
             .sumCategories(SumCategories)
+            .sum(responseEntity.stream()
+                .map(AccountEntity::getAmount)
+                .reduce(0L, Long::sum))
             .acquisitionMonth(acquisitionMonth)
             .build();
 
