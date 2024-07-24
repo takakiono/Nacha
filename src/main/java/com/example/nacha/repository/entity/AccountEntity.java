@@ -46,6 +46,11 @@ public class AccountEntity{
     private LocalDateTime accountDatetime;
 
     /**
+     * 支払者
+     */
+    private Long userId; 
+
+    /**
      * 登録日時
      */
     private LocalDateTime registrationDatetime;

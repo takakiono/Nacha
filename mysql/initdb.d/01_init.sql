@@ -45,6 +45,7 @@ create table m_account (
   , note varchar(256) not null comment '備考'
   , amount bigint not null comment '金額'
   , account_datetime timestamp not null comment '日時'
+  , user_id bigint comment '支払者'
   , registration_datetime timestamp default current_timestamp not null comment '登録日時'
   , update_datetime timestamp default current_timestamp not null comment '更新日時'
   , logical_delete_flag boolean default false not null comment '論理削除フラグ'
@@ -61,4 +62,7 @@ alter table m_account
   add constraint m_accout_FK1 foreign key (category_id) references m_category(category_id);
 
 alter table m_account
-  add constraint m_account_FK1 foreign key (group_id) references m_group(group_id);
+  add constraint m_account_FK2 foreign key (group_id) references m_group(group_id);
+
+alter table m_account
+  add constraint m_account_FK3 foreign key (user_id) references m_user(user_id);

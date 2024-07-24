@@ -34,4 +34,7 @@ public class PostAccountApiRequestBean {
     @JsonFormat(pattern="yyyy-MM-dd")
     private String datetime;
 
+    /* 支払者 */
+    private String userId;
+
 }

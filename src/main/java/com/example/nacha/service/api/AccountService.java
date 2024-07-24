@@ -47,6 +47,7 @@ public class AccountService {
             .note(request.getNote())
             .amount(Long.valueOf(request.getAmount()))
             .accountDatetime(localDate.atStartOfDay())
+            .userId(Long.valueOf(request.getUserId()))
             .build();
         accountRepository.registAccount(entity);
 
@@ -83,6 +84,7 @@ public class AccountService {
                 .note(list.getNote())
                 .amount(String.valueOf(list.getAmount()))
                 .datetime(list.getAccountDatetime().format(formatter))
+                .userId(String.valueOf(list.getUserId()))
                 .build())
             .sorted((e1, e2) -> e1.getDatetime().compareTo(e2.getDatetime()))
             .collect(Collectors.toList());

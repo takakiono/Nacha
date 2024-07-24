@@ -12,6 +12,7 @@
             ,ma.note
             ,ma.amount
             ,ma.account_datetime
+            ,ma.user_id
         from 
             m_account ma
         where 
@@ -37,12 +38,14 @@
             , note
             , amount
             , account_datetime
+            , user_id
         )values(
             #{entity.groupId}
             ,#{entity.categoryId}
             ,#{entity.note}
             ,#{entity.amount}
             ,#{entity.accountDatetime}
+            ,#{entity.userId}
         );
     </insert>
 

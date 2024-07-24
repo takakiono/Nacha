@@ -39,4 +39,9 @@ public class Account {
      * 日時
      */
     private String datetime;
+
+    /**
+     * 支払者
+     */
+    private String userId;
 }
