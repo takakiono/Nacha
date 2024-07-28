@@ -27,6 +27,7 @@ public class PostAccountApiRequestBean {
     private String note;
 
     /* 金額 */
+    @NotBlank
     private String amount;
     
     /* 日付 */

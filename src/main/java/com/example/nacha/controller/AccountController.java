@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.nacha.service.api.AccountService;
 import com.example.nacha.service.bean.GetAccountApiResponseBean;
 import com.example.nacha.service.bean.GetSumCategoriesApiResponseBean;
+import com.example.nacha.service.bean.GetSumUserApiResponseBean;
 import com.example.nacha.service.bean.PostAccountApiRequestBean;
 import com.example.nacha.service.bean.PostAccountApiResponseBean;
 
@@ -47,9 +48,15 @@ public class AccountController {
         accountService.deleteAccount(accountId);
     }
 
-    @GetMapping("/account/sum")
+    @GetMapping("/account/sum/category")
     @ResponseBody
     public GetSumCategoriesApiResponseBean getSumCategories(@RequestParam @NotEmpty(message = "{javax.validation.constraints.NotEmpty.message}") String groupId, @RequestParam String acquisitionMonth){
         return accountService.getSumCategories(groupId, acquisitionMonth);
+    }
+
+    @GetMapping("/account/sum/user")
+    @ResponseBody
+    public GetSumUserApiResponseBean getSumUser(@RequestParam @NotEmpty(message = "{javax.validation.constraints.NotEmpty.message}") String groupId, @RequestParam String acquisitionMonth){
+        return accountService.getSumUsers(groupId, acquisitionMonth);
     }
 }

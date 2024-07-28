@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,18 +13,25 @@ import com.example.nacha.common.constants.ErrorMessage;
 import com.example.nacha.common.exception.NachaBusinessException;
 import com.example.nacha.repository.AccountRepository;
 import com.example.nacha.repository.CategoryRepository;
+import com.example.nacha.repository.UserRepository;
 import com.example.nacha.repository.entity.AccountEntity;
 import com.example.nacha.repository.entity.CategoryEntity;
+import com.example.nacha.repository.entity.UserEntity;
 import com.example.nacha.service.bean.GetAccountApiResponseBean;
 import com.example.nacha.service.bean.GetSumCategoriesApiResponseBean;
+import com.example.nacha.service.bean.GetSumUserApiResponseBean;
 import com.example.nacha.service.bean.PostAccountApiRequestBean;
 import com.example.nacha.service.bean.PostAccountApiResponseBean;
 import com.example.nacha.service.bean.SumCategory;
+import com.example.nacha.service.bean.SumUser;
 import com.example.nacha.service.bean.common.Account;
 
 
 @Service
 public class AccountService {
+    @Autowired
+    UserRepository userRepository;
+
     @Autowired
     AccountRepository accountRepository;
 
@@ -39,6 +47,10 @@ public class AccountService {
      */
     public PostAccountApiResponseBean registAccount(PostAccountApiRequestBean request){
         Long groupId = Long.valueOf(request.getGroupId());
+        Long userId = Optional.ofNullable(request.getUserId())
+            .filter(str -> !str.isEmpty())
+            .map(Long::valueOf)
+            .orElse(null);
 
         LocalDate localDate = LocalDate.parse(request.getDatetime(), formatter);
         AccountEntity entity = AccountEntity.builder()
@@ -47,7 +59,7 @@ public class AccountService {
             .note(request.getNote())
             .amount(Long.valueOf(request.getAmount()))
             .accountDatetime(localDate.atStartOfDay())
-            .userId(Long.valueOf(request.getUserId()))
+            .userId(userId)
             .build();
         accountRepository.registAccount(entity);
 
@@ -122,28 +134,59 @@ public class AccountService {
         List<AccountEntity> responseEntity = accountRepository.selectAccount(groupId, null, acquisitionMonth);
         List<CategoryEntity> categoryList = categoryRepository.selectCategory();
 
-        List<SumCategory> SumCategories = categoryList.stream()
+        List<SumCategory> sumCategories = categoryList.stream()
             .map(list -> {
                 // カテゴリの合計額の算出
-                Long sumAmout = responseEntity.stream()
+                Long sumAmount = responseEntity.stream()
                     .filter(e -> e.getCategoryId().equals(list.getCategoryId()))
                     .map(AccountEntity::getAmount)
                     .reduce(0L, Long::sum);
 
                 return SumCategory.builder()
                     .categoryId(String.valueOf(list.getCategoryId()))
-                    .sum(sumAmout)
+                    .sum(sumAmount)
                     .build();
             })
             .toList();
 
         return GetSumCategoriesApiResponseBean.builder()
-            .sumCategories(SumCategories)
+            .sumCategories(sumCategories)
             .sum(responseEntity.stream()
                 .map(AccountEntity::getAmount)
                 .reduce(0L, Long::sum))
             .acquisitionMonth(acquisitionMonth)
             .build();
 
+    }
+
+    /**
+     * 取得月のユーザ毎の合計値の取得
+     * @param request ユーザID
+     * @param acquisitionMonth 取得月
+     * @return
+     */
+    public GetSumUserApiResponseBean getSumUsers(String request, String acquisitionMonth){
+        Long groupId = Long.valueOf(request);
+        List<AccountEntity> responseEntity = accountRepository.selectAccount(groupId, null, acquisitionMonth);
+        List<UserEntity> userEntity = userRepository.getGroupUser(groupId);
+
+        List<SumUser> sumUser = userEntity.stream()
+            .map(list -> {
+                Long sumAmount = responseEntity.stream()
+                    .filter(e -> e.getUserId().equals(list.getUserId()))
+                    .map(AccountEntity::getAmount)
+                    .reduce(0L, Long::sum);
+                    
+                return SumUser.builder()
+                    .userId(String.valueOf(list.getUserId()))
+                    .sum(sumAmount)
+                    .build();
+            })
+            .toList();
+        
+        return GetSumUserApiResponseBean.builder()
+            .sumUser(sumUser)
+            .acquisitionMonth(acquisitionMonth)
+            .build();
     }
 }
