@@ -173,7 +173,7 @@ public class AccountService {
         List<SumUser> sumUser = userEntity.stream()
             .map(list -> {
                 Long sumAmount = responseEntity.stream()
-                    .filter(e -> e.getUserId().equals(list.getUserId()))
+                    .filter(e -> (!Objects.isNull(e.getUserId())) && e.getUserId().equals(list.getUserId()))
                     .map(AccountEntity::getAmount)
                     .reduce(0L, Long::sum);
                     
