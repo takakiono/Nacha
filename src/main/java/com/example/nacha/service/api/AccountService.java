@@ -129,6 +129,9 @@ public class AccountService {
         if(result == 0){
             throw new NachaBusinessException(ErrorMessage.NachaDeleteError);
         }
+
+        // 合計値の修正
+        registSumAccount(entity.get(0).getGroupId(), entity.get(0).getAccountDatetime().format(formatterYearMonth));
     }
 
     /**
