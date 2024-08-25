@@ -14,7 +14,9 @@ import com.example.nacha.common.exception.NachaBusinessException;
 import com.example.nacha.repository.AccountRepository;
 import com.example.nacha.repository.CategoryRepository;
 import com.example.nacha.repository.UserRepository;
+import com.example.nacha.repository.dao.AccountSumMapper;
 import com.example.nacha.repository.entity.AccountEntity;
+import com.example.nacha.repository.entity.AccountSumEntity;
 import com.example.nacha.repository.entity.CategoryEntity;
 import com.example.nacha.repository.entity.UserEntity;
 import com.example.nacha.service.bean.GetAccountApiResponseBean;
@@ -38,7 +40,11 @@ public class AccountService {
     @Autowired
     CategoryRepository categoryRepository;
 
+    @Autowired
+    AccountSumMapper accountSumMapper;
+
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    DateTimeFormatter formatterYearMonth = DateTimeFormatter.ofPattern("yyyy-MM");
 
     /**
      * 家計簿の登録
@@ -62,6 +68,8 @@ public class AccountService {
             .userId(userId)
             .build();
         accountRepository.registAccount(entity);
+
+        registSumAccount(groupId, localDate.format(formatterYearMonth));
 
         List<AccountEntity> responseEntity = accountRepository.selectAccount(groupId, Long.valueOf(entity.getAccountId()), null);
         Account account = Account.builder()
@@ -188,5 +196,34 @@ public class AccountService {
             .sumUser(sumUser)
             .acquisitionMonth(acquisitionMonth)
             .build();
+    }
+
+    /**
+     * 家計簿の合計を登録する処理
+     * @param groupId グループID
+     * @param acquisitionMonth 取得月
+     */
+    private void registSumAccount(Long groupId, String acquisitionMonth){
+        List<AccountEntity> responseEntity = accountRepository.selectAccount(groupId, null, acquisitionMonth);
+
+        List<AccountSumEntity> registEntity = responseEntity.stream()
+            .collect(Collectors.toMap(
+                AccountEntity::getCategoryId, // `categoryId` をキーとする
+                list -> AccountSumEntity.builder()
+                    .groupId(list.getGroupId())
+                    .categoryId(list.getCategoryId())
+                    .amount(responseEntity.stream()
+                        .filter(e -> e.getCategoryId().equals(list.getCategoryId()))
+                        .map(AccountEntity::getAmount)
+                        .reduce(0L, Long::sum))
+                    .yearMonth(list.getAccountDatetime().format(formatterYearMonth))
+                    .build(),
+                (existing, replacement) -> existing // 同じ `categoryId` がある場合、既存のものを使用
+            ))
+            .values().stream()
+            .toList();
+
+        accountSumMapper.regist(registEntity);
+        
     }
 }

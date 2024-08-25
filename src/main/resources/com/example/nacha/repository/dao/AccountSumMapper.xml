@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.nacha.repository.dao.AccountSumMapper">
+    <!-- 家計簿合計情報の登録 -->
+    <insert id="regist"
+        parameterType="java.util.List" useGeneratedKeys="true" keyProperty="accountSumId">
+        insert into m_account_sum(
+            group_id
+            , category_id
+            , amount
+            , `year_month`
+        )values
+        <foreach collection="entity" item="e" separator=",">
+            (
+                #{e.groupId}
+                ,#{e.categoryId}
+                ,#{e.amount}
+                ,#{e.yearMonth}
+            )
+        </foreach>
+        on duplicate key update
+            amount = values(amount)
+        ;
+    </insert>
+
+</mapper>

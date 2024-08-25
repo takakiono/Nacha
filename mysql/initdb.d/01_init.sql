@@ -3,7 +3,7 @@ CREATE DATABASE IF NOT EXISTS sample_database DEFAULT CHARACTER SET utf8;
 -- nacha_dbの作成
 create table m_group (
   group_id bigint AUTO_INCREMENT comment 'グループID'
-  , group_name varchar(256)
+  , group_name varchar(256) comment 'グループ名'
   , registration_datetime timestamp default current_timestamp not null comment '登録日時'
   , update_datetime timestamp default current_timestamp not null comment '更新日時'
   , logical_delete_flag boolean default false not null comment '論理削除フラグ'
@@ -52,6 +52,17 @@ create table m_account (
   , constraint m_account_PKC primary key (account_id)
 ) comment '家計簿マスタ';
 
+create table m_account_sum (
+  group_id bigint not null comment 'グループID'
+  , category_id bigint not null comment 'カテゴリID'
+  , amount bigint not null comment '金額'
+  , `year_month` varchar(7) not null comment '日時'
+  , registration_datetime timestamp default current_timestamp not null comment '登録日時'
+  , update_datetime timestamp default current_timestamp not null comment '更新日時'
+  , logical_delete_flag boolean default false not null comment '論理削除フラグ'
+  , constraint m_account_sum_PKC primary key (group_id, category_id, `year_month`)
+) comment '家計簿合計マスタ';
+
 alter table c_group_user
   add constraint c_group_user_FK1 foreign key (group_id) references m_group(group_id);
 
@@ -66,3 +77,9 @@ alter table m_account
 
 alter table m_account
   add constraint m_account_FK3 foreign key (user_id) references m_user(user_id);
+
+alter table m_account_sum
+  add constraint m_account_sum_FK1 foreign key (category_id) references m_category(category_id);
+
+alter table m_account_sum
+  add constraint m_account_sum_FK2 foreign key (group_id) references m_group(group_id);
