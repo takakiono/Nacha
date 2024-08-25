@@ -17,8 +17,8 @@
         <if test="groupId != null and groupId != ''">
         and mas.group_id = #{groupId}
         </if>
-        <if test="acquisitionMonth != null and acquisitionMonth != ''">
-        and mas.`year_month` = #{acquisitionMonth}
+        <if test="acquisitionYearMonth != null and acquisitionYearMonth != ''">
+        and mas.`year_month` like concat('%', #{acquisitionYearMonth}, '%')
         </if>
         ;
     </select>

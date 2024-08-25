@@ -17,6 +17,7 @@ import com.example.nacha.service.api.AccountService;
 import com.example.nacha.service.bean.GetAccountApiResponseBean;
 import com.example.nacha.service.bean.GetSumCategoriesApiResponseBean;
 import com.example.nacha.service.bean.GetSumUserApiResponseBean;
+import com.example.nacha.service.bean.GetSumApiResponseBean;
 import com.example.nacha.service.bean.PostAccountApiRequestBean;
 import com.example.nacha.service.bean.PostAccountApiResponseBean;
 
@@ -57,6 +58,12 @@ public class AccountController {
     @GetMapping("/account/sum/user")
     @ResponseBody
     public GetSumUserApiResponseBean getSumUser(@RequestParam @NotEmpty(message = "{javax.validation.constraints.NotEmpty.message}") String groupId, @RequestParam String acquisitionMonth){
-        return accountService.getSumUsers(groupId, acquisitionMonth);
+        return accountService.getSumUser(groupId, acquisitionMonth);
+    }
+
+    @GetMapping("/account/sum")
+    @ResponseBody
+    public GetSumApiResponseBean getSum(@RequestParam @NotEmpty(message = "{javax.validation.constraints.NotEmpty.message}") String groupId, @RequestParam String acquisitionYear){
+        return accountService.getSum(groupId, acquisitionYear);
     }
 }

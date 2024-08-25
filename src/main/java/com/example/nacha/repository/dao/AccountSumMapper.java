@@ -17,9 +17,9 @@ public interface AccountSumMapper {
      * 
      * @param groupId グループID
      * @param accountId 家計簿ID
-     * @param acquisitionMonth 取得月
+     * @param acquisitionYearMonth 取得年月
      */
-    List<AccountSumEntity> select(@Param("groupId") Long groupId, @Param("acquisitionMonth") String acquisitionMonth);
+    List<AccountSumEntity> select(@Param("groupId") Long groupId, @Param("acquisitionYearMonth") String acquisitionYearMonth);
 
     /**
      * 家計簿合計情報の登録

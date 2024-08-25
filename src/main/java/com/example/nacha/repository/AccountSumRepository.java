@@ -12,16 +12,16 @@ import com.example.nacha.repository.entity.AccountSumEntity;
 @Repository
 public class AccountSumRepository {
     @Autowired
-    AccountSumMapper accountSUmMapper;
+    AccountSumMapper accountSumMapper;
 
     /**
      * 家計簿合計情報の取得
      * @param groupId グループID
-     * @param acquisitionMonth　取得月
+     * @param acquisitionYearMonth　取得年月
      * @return
      */
-    public List<AccountSumEntity> selectAccount(Long groupId, String acquisitionMonth){
-        return accountSUmMapper.select(groupId, acquisitionMonth);
+    public List<AccountSumEntity> selectAccount(Long groupId, String acquisitionYearMonth){
+        return accountSumMapper.select(groupId, acquisitionYearMonth);
     }
 
     /**
@@ -30,7 +30,7 @@ public class AccountSumRepository {
      * @return
      */
     public int registAccountSum(List<AccountSumEntity> entity){
-        return accountSUmMapper.regist(entity);
+        return accountSumMapper.regist(entity);
     }
 
 }
