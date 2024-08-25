@@ -3,6 +3,26 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.nacha.repository.dao.AccountSumMapper">
+    <!-- 家計簿合計情報の取得 -->
+    <select id="select" resultType="com.example.nacha.repository.entity.AccountSumEntity">
+        select
+            mas.group_id
+            ,mas.category_id
+            ,mas.amount
+            ,mas.`year_month`
+        from 
+            m_account_sum mas
+        where 
+            mas.logical_delete_flag = false
+        <if test="groupId != null and groupId != ''">
+        and mas.group_id = #{groupId}
+        </if>
+        <if test="acquisitionMonth != null and acquisitionMonth != ''">
+        and mas.`year_month` = #{acquisitionMonth}
+        </if>
+        ;
+    </select>
+
     <!-- 家計簿合計情報の登録 -->
     <insert id="regist"
         parameterType="java.util.List" useGeneratedKeys="true" keyProperty="accountSumId">

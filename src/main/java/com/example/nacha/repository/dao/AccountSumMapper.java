@@ -13,6 +13,15 @@ import com.example.nacha.repository.entity.AccountSumEntity;
 public interface AccountSumMapper {
 
     /**
+     * 家計簿合計情報の取得
+     * 
+     * @param groupId グループID
+     * @param accountId 家計簿ID
+     * @param acquisitionMonth 取得月
+     */
+    List<AccountSumEntity> select(@Param("groupId") Long groupId, @Param("acquisitionMonth") String acquisitionMonth);
+
+    /**
      * 家計簿合計情報の登録
      * 
      * @param entity 家計簿合計情報

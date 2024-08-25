@@ -12,12 +12,11 @@ import org.springframework.util.ObjectUtils;
 import com.example.nacha.common.constants.ErrorMessage;
 import com.example.nacha.common.exception.NachaBusinessException;
 import com.example.nacha.repository.AccountRepository;
+import com.example.nacha.repository.AccountSumRepository;
 import com.example.nacha.repository.CategoryRepository;
 import com.example.nacha.repository.UserRepository;
-import com.example.nacha.repository.dao.AccountSumMapper;
 import com.example.nacha.repository.entity.AccountEntity;
 import com.example.nacha.repository.entity.AccountSumEntity;
-import com.example.nacha.repository.entity.CategoryEntity;
 import com.example.nacha.repository.entity.UserEntity;
 import com.example.nacha.service.bean.GetAccountApiResponseBean;
 import com.example.nacha.service.bean.GetSumCategoriesApiResponseBean;
@@ -41,7 +40,7 @@ public class AccountService {
     CategoryRepository categoryRepository;
 
     @Autowired
-    AccountSumMapper accountSumMapper;
+    AccountSumRepository accountSumRepository;
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     DateTimeFormatter formatterYearMonth = DateTimeFormatter.ofPattern("yyyy-MM");
@@ -142,32 +141,23 @@ public class AccountService {
      */
     public GetSumCategoriesApiResponseBean getSumCategories(String request, String acquisitionMonth){
         Long groupId = Long.valueOf(request);
-        List<AccountEntity> responseEntity = accountRepository.selectAccount(groupId, null, acquisitionMonth);
-        List<CategoryEntity> categoryList = categoryRepository.selectCategory();
-
-        List<SumCategory> sumCategories = categoryList.stream()
-            .map(list -> {
-                // カテゴリの合計額の算出
-                Long sumAmount = responseEntity.stream()
-                    .filter(e -> e.getCategoryId().equals(list.getCategoryId()))
-                    .map(AccountEntity::getAmount)
-                    .reduce(0L, Long::sum);
-
-                return SumCategory.builder()
-                    .categoryId(String.valueOf(list.getCategoryId()))
-                    .sum(sumAmount)
-                    .build();
-            })
+        
+        List<AccountSumEntity> res = accountSumRepository.selectAccount(groupId, acquisitionMonth);
+        List<SumCategory> sum = res.stream()
+            .map(list -> SumCategory.builder()
+                .categoryId(String.valueOf(list.getCategoryId()))
+                .sum(list.getAmount())
+                .build())
             .toList();
-
+        
         return GetSumCategoriesApiResponseBean.builder()
-            .sumCategories(sumCategories)
-            .sum(responseEntity.stream()
-                .map(AccountEntity::getAmount)
+            .sumCategories(sum)
+            .sum(res.stream()
+                .map(AccountSumEntity::getAmount)
                 .reduce(0L, Long::sum))
             .acquisitionMonth(acquisitionMonth)
             .build();
-
+        
     }
 
     /**
@@ -176,7 +166,7 @@ public class AccountService {
      * @param acquisitionMonth 取得月
      * @return
      */
-    public GetSumUserApiResponseBean getSumUsers(String request, String acquisitionMonth){
+    public GetSumUserApiResponseBean getSumUser(String request, String acquisitionMonth){
         Long groupId = Long.valueOf(request);
         List<AccountEntity> responseEntity = accountRepository.selectAccount(groupId, null, acquisitionMonth);
         List<UserEntity> userEntity = userRepository.getGroupUser(groupId);
@@ -226,7 +216,7 @@ public class AccountService {
             .values().stream()
             .toList();
 
-        accountSumMapper.regist(registEntity);
+        accountSumRepository.registAccountSum(registEntity);
         
     }
 }
